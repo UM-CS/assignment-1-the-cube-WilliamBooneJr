@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Cube {
 
@@ -92,16 +93,16 @@ public class Cube {
 		
 
 	static void randomizeCube() {
-    String[] possibleMoves = {"F", "F'", "B", "B'", "L", "L'", "R", "R'", "U", "U'", "D", "D'"};
-    java.util.Random random = new java.util.Random();
-    for (int i = 0; i < 20; i++) { // Make 20 random moves
-        int moveIndex = random.nextInt(possibleMoves.length);
-        String move = possibleMoves[moveIndex];
-        makeMove(move);
-        System.out.println("Random move: " + move);
-        moveHistory.add(move); // Track the random move
-    }}
-	
+		String[] possibleMoves = {"F", "F'", "B", "B'", "L", "L'", "R", "R'", "U", "U'", "D", "D'"};
+		Random random = new Random();
+		for (int i = 0; i < 20; i++) { // Make 20 random moves
+			int moveIndex = random.nextInt(possibleMoves.length);
+			String move = possibleMoves[moveIndex];
+			makeMove(move);
+			System.out.println("Random move: " + move);
+			moveHistory.add(move); // Track the random move
+		}}
+		
 	static int getFaceIndex(String move) {
 		// Remove the ' from the move to get the face letter
 		String faceLetter = move.replaceAll("[']", "");
