@@ -11,8 +11,8 @@ package com.example.project;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Cube {
 
@@ -21,11 +21,29 @@ public class Cube {
 		Scanner sc = new Scanner(System.in);
         String input;
 
-        // Initialize or reset the cube to the starting state if needed
-        printTCube(numCube);
+		resetCube();
+		printTCube(numCube);
+
+        // Process command line arguments before entering the main loop
+        if (args.length > 0) {
+            System.out.println("Processing command line arguments...");
+            for (String arg : args) {
+                if ("R".equalsIgnoreCase(arg)) {
+                    // Randomize the cube
+                    randomizeCube();
+                } else if (isValidMove(arg)) {
+                    // Perform a move
+                    makeMove(arg);
+                } else {
+                    System.out.println("Invalid argument: " + arg);
+                }
+            }
+            printTCube(numCube);
+        }
+
 
         while (true) {
-            System.out.println("\nEnter your move (F, F', R, R', U, U', L, L', B, B', D, D', S for solution, RD to randomize) or 'Q' to quit:");
+            System.out.println("\nEnter your move (F, F', R, R', U, U', L, L', B, B', D, D', S for solution, RD to randomize, RS to reset) or 'Q' to quit:");
 			input = sc.nextLine().toUpperCase();
             if ("Q".equals(input)) {
                 System.out.println("Exiting game...");
@@ -34,6 +52,11 @@ public class Cube {
 			if ("S".equals(input)) {
     		printSolution();
     		continue;}
+
+			if ("RS".equals(input)) {
+			resetCube();
+			printTCube(numCube);
+			continue;}
 
  			else if ("RD".equals(input)) {
     		randomizeCube();
@@ -73,6 +96,24 @@ public class Cube {
 		{null, null, null, "g4", "g5", "g6", null, null, null},//10    
 		{null, null, null, "g7", "g8", "g9", null, null, null}//11     
 	};
+
+	static void resetCube() {
+		// Reset the cube to its initial state
+		numCube = new String[][] {
+			{null, null, null, "w1", "w2", "w3", null, null, null},
+			{null, null, null, "w4", "w5", "w6", null, null, null},
+			{null, null, null, "w7", "w8", "w9", null, null, null},
+			{"o1", "o2", "o3", "b1", "b2", "b3", "r1", "r2", "r3"},
+			{"o4", "o5", "o6", "b4", "b5", "b6", "r4", "r5", "r6"},
+			{"o7", "o8", "o9", "b7", "b8", "b9", "r7", "r8", "r9"},
+			{null, null, null, "y1", "y2", "y3", null, null, null},
+			{null, null, null, "y4", "y5", "y6", null, null, null},
+			{null, null, null, "y7", "y8", "y9", null, null, null},
+			{null, null, null, "g1", "g2", "g3", null, null, null},
+			{null, null, null, "g4", "g5", "g6", null, null, null},
+			{null, null, null, "g7", "g8", "g9", null, null, null}
+		};
+	}
 
 	static void printSolution() {
 		Collections.reverse(moveHistory); // Reverse the order of moves
